@@ -1,0 +1,40 @@
+.roster {
+  background-image: url("/src/assets/questBoardBackground.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-bottom: 40px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.name, .mail, .password {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name input, .mail input, .password input{
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+    outline: none;
+    width: 52%;
+}
+
+.password input {
+    width: 55%;
+}
+

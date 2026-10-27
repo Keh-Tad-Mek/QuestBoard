@@ -5,7 +5,9 @@ function App() {
 
   return (
     <>
-      <h1>Initial Push</h1>
+      <header>
+        <h1>Quest Board</h1>
+      </header>
     </>
   )
 }

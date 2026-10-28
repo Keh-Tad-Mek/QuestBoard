@@ -11,6 +11,7 @@
   padding-right: 40px;
   padding-left: 40px;
   padding-bottom: 40px;
+  /* min-height: 70vh; */
 }
 
 form {
@@ -21,20 +22,26 @@ form {
     gap: 20px;
 }
 
-.name, .mail, .password {
-    display: flex;
-    justify-content: space-between;
+h1 {
+    font-size: 40px;
 }
 
-.name input, .mail input, .password input{
+.name, .mail, .password, .country {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+form label {
+    width: 50%;
+}
+
+.name input, .mail input, .password input, .country select{
     border: none;
     border-bottom: 1px solid black;
     background-color: transparent;
     outline: none;
-    width: 52%;
+    width: 50%;
 }
 
-.password input {
-    width: 55%;
-}
 

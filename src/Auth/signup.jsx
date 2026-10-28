@@ -3,9 +3,9 @@ import AuthStyles from "./signup.module.css"
 
 function SignUp(){
     return (
-        <>
+        <div className={AuthStyles.page}>
             <AuthForm />
-        </>
+        </div>
     )
 }
 

@@ -1,44 +1,29 @@
-* {
-  /* font-family: 'Cinzel', serif; */
-  font-family: 'Uncial Antiqua', serif
-}
-
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
+/* signup.module.css */
+.page {
+  min-height: 100vh;
   background-image: url("/src/assets/tavern.jpeg");
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
-body::before {
+.page::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(20px);
-  background: rgba(0, 0, 0, 0.2);   /* optional dim */
-  z-index: -1;              /* stays behind #root content */
-  pointer-events: none;     /* don't block clicks */
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+  pointer-events: none;
 }
 
-#root {
+/* make the form sit above the blur */
+.page > * {
   position: relative;
   z-index: 1;
-  height: 100%;
-  overflow: auto;
 }
+

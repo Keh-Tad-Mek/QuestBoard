@@ -1,9 +1,12 @@
 import AuthStyles from "./authForm.module.css"
 import { useState } from "react"
-import { countries } from "countries-list"
 
 function AuthForm() {
-    const [country, setCountry] = useState("")
+    const [email, setEmail] = useState("")
+    const [emailFocused, setEmailFocused] = useState(false)
+
+    const emailIsInvalid = email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+
     return (
         <div className={AuthStyles.roster}>
             <div className={AuthStyles.backgroundBlur}></div>
@@ -16,10 +19,18 @@ function AuthForm() {
 
                 <div className={AuthStyles.mail}>
                     <label htmlFor="mail">Yer raven address?</label>
-                    <input id="mail" type="email" />
+                    <input
+                        id="mail"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.currentTarget.value)}
+                        onFocus={() => setEmailFocused(true)}
+                        onBlur={() => setEmailFocused(false)}
+                    />
                 </div>
 
-                <div className={AuthStyles.password}
+                <div
+                    className={AuthStyles.password}
                     style={{ marginBottom: "0.5rem" }}
                 >
                     <label htmlFor="password">Yer secret word?</label>
@@ -27,6 +38,12 @@ function AuthForm() {
                 </div>
 
                 <button type="submit">Take The Oath</button>
+
+                {emailFocused && emailIsInvalid && (
+                    <p style={{ color: "red", margin: 0 }}>
+                        That is not a valid raven address ya scallywag
+                    </p>
+                )}
             </form>
         </div>
     )

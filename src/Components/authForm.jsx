@@ -19,22 +19,14 @@ function AuthForm() {
                     <input id="mail" type="email" />
                 </div>
 
-                <div className={AuthStyles.password}>
+                <div className={AuthStyles.password}
+                    style={{ marginBottom: "0.5rem" }}
+                >
                     <label htmlFor="password">Yer secret word?</label>
                     <input id="password" type="password" />
                 </div>
 
-                <div className={AuthStyles.country}>
-                    <label htmlFor="country">Which kingdom do ye hail from?</label>
-                    <select name="country" 
-                    id="country"
-                    onChange={(e) => setCountry(e.target.value)}>
-                        <option value="" disabled>Choose a realm</option>
-                        {Object.entries(countries).map(([code, c]) => (
-                            <option key={code} value={code}>{c.name}</option>
-                        ))}
-                    </select>
-                </div>
+                <button type="submit">Take The Oath</button>
             </form>
         </div>
     )

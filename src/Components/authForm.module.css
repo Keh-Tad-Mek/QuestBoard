@@ -45,3 +45,17 @@ form label {
 }
 
 
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.25s ease-in-out;
+}
+
+button:hover {
+    cursor: pointer;
+    color: red;
+    scale: 1.2
+}

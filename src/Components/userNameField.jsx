@@ -4,7 +4,8 @@ function UserNameField({
     userName, 
     setUserName, 
     setUserNameFocused,
-    setUserNameFlag
+    setUserNameFlag,
+    borderColor
 }) {
 
     const userNameValidation = (e) => {
@@ -14,7 +15,9 @@ function UserNameField({
         const hasSymbolsOrSpaces = /[\s\W]/.test(val)
 
         if (hasSymbolsOrSpaces) {
-            setUserNameFlag("No symbols or spaces are allowed in yer name ye mangy cur. \n What are ye, a galley slave??")
+            setUserNameFlag("No symbols or spaces are allowed in yer name ye mangy cur. \n What are ye, a marked rogue?")
+        } else if (val.length < 4 && val.length > 0) {
+            setUserNameFlag("Ye are as short as yer name ye dwarf. \n Pick a longer label. ")
         } else {
             setUserNameFlag("")
         }
@@ -30,6 +33,9 @@ function UserNameField({
                 onChange={userNameValidation}
                 onFocus={() => setUserNameFocused(true)}
                 onBlur={() => setUserNameFocused(false)}
+                style={{
+                    borderBottom: `1px solid ${borderColor}`
+                }}
             />
         </div>
     )

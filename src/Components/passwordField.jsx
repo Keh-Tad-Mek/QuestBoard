@@ -6,6 +6,8 @@ function PasswordField({
     setPasswordFocused,
     setPasswordFlag,
     setPasswordStrength,
+    borderColor,
+    setPasswordValid
 }) {
 
     const handlePasswordChange = (e) => {
@@ -42,23 +44,28 @@ function PasswordField({
             case 1:
                 prefix = "Yer secret word is as weak as ye."
                 color = "red"
+                setPasswordValid(false)
                 break
             case 2:
                 prefix = "Ye'll not survive these quests with a secret word that bad."
                 color = "rgb(255, 115, 0)"
+                setPasswordValid(false)
                 break
             case 3:
                 prefix = "Secret word as dull as ye are. Sharpen it ye mongrel."
                 color = "yellow"
+                setPasswordValid(false)
                 break
             case 4:
                 prefix = "Good secret word traveler, but still not the best."
                 color = "rgb(58, 182, 0)"
+                setPasswordValid(true)
                 break
             case 5:
             default:
                 prefix = "Secret word as strong as the traveler. Commence"
                 color = "green"
+                setPasswordValid(true)
                 break
         }
 
@@ -83,6 +90,9 @@ function PasswordField({
                 onChange={handlePasswordChange}
                 onFocus={() => setPasswordFocused(true)}
                 onBlur={() => setPasswordFocused(false)}
+                style={{
+                    borderBottom: `1px solid ${borderColor}`
+                }}
             />
         </div>
     )

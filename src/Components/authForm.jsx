@@ -3,6 +3,7 @@ import { useState, useRef } from "react"
 import EmailField from "./emailField"
 import UserNameField from "./userNameField"
 import PasswordField from "./passwordField"
+import OtpField from "./otpField"
 import { authClient } from "../lib/auth-client"
 
 function AuthForm() {
@@ -10,23 +11,24 @@ function AuthForm() {
     const [emailFocused, setEmailFocused] = useState(false)
     const emailIsInvalid = email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     const [emailBorderColor, setEmailBorderColor] = useState("black")
-    const [emailWarning, setEmailWarning] = useState("")
 
     const [password, setPassword] = useState("")
     const [passwordFocused, setPasswordFocused] = useState(false)
     const [passwordFlag, setPasswordFlag] = useState("")
     const [passwordStrength, setPasswordStrength] = useState("")
     const [passwordBorderColor, setPasswordBorderColor] = useState("black")
-    const [passwordWarning, setPasswordWarning] = useState("")
     const [passwordValid, setPasswordValid] = useState(false)
 
     const [userName, setUserName] = useState("")
     const [userNameFocused, setUserNameFocused] = useState(false)
     const [userNameFlag, setUserNameFlag] = useState("")
     const [userNameBorderColor, setUserNameBorderColor] = useState("black")
-    const [userNameWarning, setUserNameWarning] = useState("")
 
     const [formWarning, setFormWarning] = useState("")
+    const [submitting, setSubmitting] = useState(false)
+
+    const [displayOtpField, setDisplayOtpField] = useState("none")
+    const [otp, setOtp] = useState("")
 
     const timeRef = useRef(null)
 
@@ -37,7 +39,6 @@ function AuthForm() {
         const missingEmail = !email
         const missingPassword = !password
 
-        // 1. Empty-field check takes precedence over validity
         if (missingUserName || missingEmail || missingPassword) {
             if (missingUserName) setUserNameBorderColor("red")
             if (missingEmail) setEmailBorderColor("red")
@@ -53,7 +54,6 @@ function AuthForm() {
             return
         }
 
-        // 2. Validity check (generic message only)
         if (userNameFlag || emailIsInvalid || !passwordValid) {
             setFormWarning("Something you filled is wrong ya scallywag, fix that or bugger off!")
             clearTimeout(timeRef.current)
@@ -66,8 +66,26 @@ function AuthForm() {
             return
         }
 
-        // 3. All good — proceed with submission
-        // await authClient.signUp(...) or whatever your logic is
+        setFormWarning("")
+
+        const fallBackName = email.split('@')[0]
+        setSubmitting(true)
+        try {
+            const { data, error } = await authClient.signUp.email(
+                {
+                    email,
+                    password,
+                    username: userName,
+                    name: email.split("@")[0],
+                },
+                {
+                    onSuccess: (ctx) => setDisplayOtpField("flex"),
+                    onError: (ctx) => console.log(ctx.error),
+                }
+            )
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
@@ -91,6 +109,14 @@ function AuthForm() {
                     borderColor={emailBorderColor}
                 />
 
+                <OtpField 
+                    email={email}
+                    display={displayOtpField}
+                    setDisplay={setDisplayOtpField}
+                    otp={otp}
+                    setOtp={setOtp}
+                />
+
                 <PasswordField
                     password={password}
                     setPassword={setPassword}
@@ -101,7 +127,11 @@ function AuthForm() {
                     setPasswordValid={setPasswordValid}
                 />
 
-                <button type="submit">
+                <button
+                type="submit"
+                className={submitting ? AuthStyles.submitting : ""}
+                disabled={submitting}
+                >
                     Take The Oath
                 </button>
 

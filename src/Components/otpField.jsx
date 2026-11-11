@@ -1,5 +1,6 @@
-import AuthStyles from "./authForm.module.css"
+import { useState, useEffect } from "react"
 import { authClient } from "../lib/auth-client"
+import AuthStyles from "./authForm.module.css"
 import { useNavigate } from "react-router"
 
 function otpField ({ 
@@ -9,8 +10,29 @@ function otpField ({
     otp,
     setOtp
 }) {
+    const [otpResendDisabled, setOtpResendDisabled] = useState(true)
+    const [seconds, setSeconds] = useState(30)
     const navigate = useNavigate()
+
+    useEffect(() => {   
+        if (!otpResendDisabled) return
+
+        if (seconds <= 0) {
+            setOtpResendDisabled(false)
+            return
+        }
+
+        const id = setTimeout(() => setSeconds(s => s - 1), 1000)
+        return () => clearTimeout(id)
+    }, [seconds, otpResendDisabled])
+
+    useEffect(() => {
+        if (display === "none") return 
+        setSeconds(30)
+        setOtpResendDisabled(true)
+    }, [display])
     
+
     const verifyOtp = async (otp) => {
         const { data, error } = await authClient.emailOtp.verifyEmail({
             email: email,
@@ -25,6 +47,27 @@ function otpField ({
         }
 
     }
+
+    const resendOtp = async () => {
+        if (otpResendDisabled) {
+            console.log("Not time yet")
+            return
+        }
+
+        const { error } = await authClient.emailOtp.sendVerificationOtp({
+            email, 
+            type: "email-verification"
+        })
+
+        if (error) {
+            console.log(error)
+            return
+        }
+
+        setSeconds(30)
+        setOtpResendDisabled(true)
+    }
+
 
     return (
         <div style={{
@@ -53,6 +96,15 @@ function otpField ({
                         }
                     >Cancel</button>
                 </div>
+                <p
+                    className={AuthStyles.resendOtp}
+                    onClick={resendOtp}
+                    style={{ cursor: otpResendDisabled ? "default" : "pointer" }}
+                >
+                    {otpResendDisabled
+                        ? `Send another raven in ${seconds}s`
+                        : "Send another raven"}
+                </p>
             </div>
         </div>
     )

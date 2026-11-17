@@ -46,7 +46,7 @@ form label {
 }
 
 
-button {
+button[type="submit"] {
     width: 100%;
     padding: 10px;
     font-size: 25px;
@@ -55,7 +55,7 @@ button {
     transition: all 0.5s ease;
 }
 
-button:hover {
+button[type="submit"]:hover {
     cursor: pointer;
     color: red;
     scale: 1.15
@@ -71,12 +71,12 @@ button:hover {
     cursor: wait;
 }
 
-button:disabled {
+button[type="submit"]:disabled {
     cursor: wait;
     scale: 1;            /* kill the hover scale while loading */
 }
 
-button:disabled:hover {
+button[type="submit"]:disabled:hover {
     color: inherit;      /* don't hover-red while already pulsing */
     scale: 1;
 }

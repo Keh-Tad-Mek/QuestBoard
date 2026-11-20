@@ -3,7 +3,8 @@ import { useState } from "react"
 
 function questTitle ({
     title,
-    setTitle
+    setTitle,
+    borderColor
 }) {
     const [titleLength, setTitleLength] = useState(0)
     const [titleLimitDisplay, setTitleLimitDisplay] = useState("hidden")
@@ -17,6 +18,10 @@ function questTitle ({
         <div className={HomeStyles.questTitle}>
             <p>What be the title of this quest?</p>
             <input 
+                style={{
+                    borderBottom:`1px solid ${borderColor}`
+
+                }}
                 type="text" 
                 value={title}
                 maxLength={50}

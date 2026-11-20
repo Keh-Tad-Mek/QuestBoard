@@ -120,18 +120,46 @@ h1 {
   border: 1px solid black;
   background-color: transparent;
   outline: none;
-  text-indent: 10px;
 }
 
 .questDifficulty {
   width: 100%;
 }
 
-.questDifficulty .difficultyChoices {
-  display: flex;
-  justify-content: flex-start;
-  gap: 130px;
-  margin-bottom: 40px;
+.difficultyChoices {
+    display: flex;
+    gap: 28%;
+}
+
+/* hide the radio itself, but keep it focusable/clickable via label */
+.difficultyChoices input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.difficultyChoices label {
+    cursor: pointer;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.15s ease;
+}
+
+.easy   { color: green; }
+.medium { color: yellow; }
+.hard   { color: red; }
+
+/* underline the label whose radio is checked */
+.difficultyChoices label:has(input:checked) {
+    border-bottom-color: currentColor;
+}
+
+/* keyboard focus ring, since the radio is invisible */
+.difficultyChoices label:has(input:focus-visible) {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
 }
 
 .questDifficulty .difficultyChoices input {
@@ -161,4 +189,16 @@ h1 {
 .postButton:hover {
   scale: 1.25;
   color: red;
+}
+
+.maxQuestTakers {
+  width: 100%;
+}
+
+.maxQuestTakers input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: transparent;
+  outline: none;
 }

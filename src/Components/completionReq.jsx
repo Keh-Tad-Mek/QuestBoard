@@ -3,7 +3,8 @@ import HomeStyles from "../Home/home.module.css"
 
 function completionReq ({
     requirement,
-    setRequirement
+    setRequirement,
+    borderColor
 }) {
     const [completionRequirementLength, setCompletionRequirementLength] = useState(0)
     const [requirementLengthDisplay, setRequirementLengthDisplay] = useState("hidden")
@@ -18,6 +19,9 @@ function completionReq ({
         <div className={HomeStyles.completionReq}>
             <p>What be required of the quest taker to complete this quest?</p>
             <textarea 
+                style={{
+                    border: `1px solid ${borderColor}`
+                }}
                 name="" 
                 id=""
                 maxLength={2000}

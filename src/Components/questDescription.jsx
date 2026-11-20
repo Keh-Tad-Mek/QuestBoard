@@ -3,7 +3,8 @@ import { useState } from "react"
 
 function questDescription ({
     description,
-    setDescription
+    setDescription,
+    borderColor
 }) {
     const [descriptionLength, setDescriptionLength] = useState(0)
     const [descriptionLengthDisplay, setDescriptionLengthDisplay] = useState("hidden")
@@ -20,6 +21,9 @@ function questDescription ({
                 Describe the nature of yer quest.
             </p>
             <textarea 
+                style={{
+                    border: `1px solid ${borderColor}`
+                }}
                 name="" 
                 maxLength={2000}
                 value={description}
